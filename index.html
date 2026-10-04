@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <meta name="description" content="Tarjimon AI: matn, rasm va ovozni 60 dan ortiq tilga tarjima qiling va tarjima izohini o‘qing.">
+  <title>Tarjimon AI — aqlli tarjima va tahlil</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Tarjimon AI bosh sahifa"><span class="brand-symbol">文</span><span>tarjimon<span class="brand-ai">.ai</span></span></a>
+    <nav aria-label="Asosiy navigatsiya"><a href="#translator">Tarjimon</a><a href="#about">Imkoniyatlar</a></nav>
+    <span class="service-status"><i></i> AI tarjimon</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="intro-badge"><span>✳</span> TILLAR ORASIDAGI MASOFA — YO‘Q</div>
+      <h1>Har bir so‘zda<br><span>yangi bir dunyo.</span></h1>
+      <p>Matn, rasm va ovozni tarjima qiling. Pastdagi AI izohi ma’no, ohang va tarjima tanlovlarini tushuntiradi.</p>
+    </section>
+
+    <section class="translator-shell" id="translator" aria-label="Tarjima vositasi">
+      <div class="mode-tabs" role="tablist" aria-label="Tarjima turi">
+        <button class="mode-tab is-active" type="button" role="tab" aria-selected="true" data-mode="text"><span>▤</span> Matn</button>
+        <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode="image"><span>▧</span> Rasm</button>
+        <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode="audio"><span>◖</span> Ovoz</button>
+        <span class="language-count">60+ TIL</span>
+      </div>
+
+      <div class="language-bar">
+        <label class="language-select"><span class="sr-only">Qaysi tildan tarjima qilish</span><select id="source-language"></select></label>
+        <button class="swap-button" id="swap-languages" type="button" aria-label="Tillarni almashtirish" title="Tillarni almashtirish">⇄</button>
+        <label class="language-select target-select"><span class="sr-only">Qaysi tilga tarjima qilish</span><select id="target-language"></select></label>
+      </div>
+
+      <div class="work-area">
+        <div class="input-panel">
+          <div class="panel-label"><span id="input-label">MATN</span><span id="character-count">0 / 40 000</span></div>
+          <textarea id="source-text" maxlength="40000" placeholder="Tarjima qilmoqchi bo‘lgan matnni kiriting..." aria-label="Tarjima qilinadigan matn"></textarea>
+          <div class="media-input" id="media-input" hidden>
+            <input id="media-file" type="file" hidden>
+            <div class="upload-content" id="upload-content">
+              <span class="upload-icon" id="upload-icon">▧</span>
+              <strong id="upload-title">Rasmni shu yerga tashlang</strong>
+              <span id="upload-description">yoki qurilmangizdan tanlang · PNG, JPG, WEBP</span>
+              <button class="choose-file" id="choose-file" type="button">Fayl tanlash</button>
+            </div>
+            <div class="selected-file" id="selected-file" hidden></div>
+          </div>
+          <div class="input-tools">
+            <button class="tool-button clear-button" id="clear-input" type="button" aria-label="Kiritilgan matnni tozalash">⌫ <span>Tozalash</span></button>
+            <div class="input-actions">
+              <button class="tool-button record-button" id="record-audio" type="button" hidden><span class="mic-icon">●</span> Ovoz yozish</button>
+              <span class="safe-note"><span>◇</span> Serverda saqlanmaydi</span>
+            </div>
+          </div>
+        </div>
+        <div class="output-panel">
+          <div class="panel-label"><span>TARJIMA</span><span class="gemini-mark">✳ GEMINI AI</span></div>
+          <div class="translation-output" id="translation-output" aria-live="polite">Tarjimangiz shu yerda ko‘rinadi.</div>
+          <div class="output-tools">
+            <button class="tool-button" id="copy-translation" type="button" aria-label="Tarjimani nusxalash" disabled>▢ <span>Nusxalash</span></button>
+            <span class="output-hint" id="output-hint">Natija namuna emas — tarjima so‘rovi yuboriladi.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="translate-footer">
+        <p class="demo-warning"><span>ⓘ</span> Demo so‘rovlari cheklangan. Matn va fayllar tarjima uchun Gemini’ga yuboriladi; maxfiy ma’lumot yubormang.</p>
+        <button class="translate-button" id="translate-button" type="button"><span>✳</span> Tarjima qilish <span class="button-arrow">→</span></button>
+      </div>
+    </section>
+
+    <section class="analysis-card" id="analysis" aria-live="polite" hidden>
+      <div class="analysis-heading">
+        <div class="analysis-icon">✳</div>
+        <div><span class="analysis-overline">AI YORDAMCHISI · GEMINI</span><h2>Tarjima tahlili</h2></div>
+        <span class="analysis-language" id="detected-language"></span>
+      </div>
+      <p id="analysis-text"></p>
+      <div class="analysis-footer"><span>Tarjima mazmuni, ohangi va muhim iboralar haqida</span><span>AI yaratgan · tekshirib foydalaning</span></div>
+    </section>
+
+    <section class="feature-row" id="about">
+      <article><span class="feature-icon feature-purple">文</span><div><strong>60 dan ortiq til</strong><p>Dunyo tillari orasida oson tarjima qiling.</p></div></article>
+      <article><span class="feature-icon feature-green">▧</span><div><strong>Rasmdan matn</strong><p>Rasmdagi o‘qiladigan yozuvni aniqlang.</p></div></article>
+      <article><span class="feature-icon feature-orange">◖</span><div><strong>Ovozdan tarjima</strong><p>Gapni yozib oling yoki audio yuboring.</p></div></article>
+      <article><span class="feature-icon feature-blue">✳</span><div><strong>AI izohi</strong><p>Tarjima ohangi va nozik ma’nolarini biling.</p></div></article>
+    </section>
+  </main>
+
+  <footer><a class="brand footer-brand" href="/"><span class="brand-symbol">文</span><span>tarjimon<span class="brand-ai">.ai</span></span></a><p>AI yordamida tarjima qilingan natijalar xato qilishi mumkin. Muhim matnlarni tekshirib chiqing.</p><span>DEMO · GEMINI API</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
